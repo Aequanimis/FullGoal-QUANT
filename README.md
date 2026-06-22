@@ -1,2 +1,5 @@
 # FullGoal-QUANT
-for return offer
+
+本项目用于境内外策略 ETF 发展情况及经验借鉴课题研究。
+
+当前阶段聚焦境内策略 ETF 产品池、策略分类、代表产品与指数规则梳理。
