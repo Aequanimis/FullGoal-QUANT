@@ -75,6 +75,7 @@ let state = {
     us: ["BlackRock/iShares", "Invesco"]
   }
 };
+let logoRequestId = 0;
 
 const els = {
   managerList: document.getElementById("managerList"),
@@ -101,7 +102,7 @@ const els = {
 };
 
 function rankLabel(rank) {
-  return `RANK ${String(rank).padStart(2, "0")}`;
+  return `排名 ${String(rank).padStart(2, "0")}`;
 }
 
 function managerScaleRank(manager) {
@@ -120,10 +121,8 @@ function logoClassFor(manager) {
 }
 
 function formatRankLabel(rank) {
-  if (rank === 1) return "BEST";
-  if (rank === 2) return "2nd";
-  if (rank === 3) return "3rd";
-  return `${rank}th`;
+  if (rank === 1) return "最佳";
+  return `第${rank}`;
 }
 
 function rankClass(rank) {
@@ -341,7 +340,7 @@ function renderCompareMetrics(managerA, managerB) {
     const valueB = managerB.scores[dimension];
     const diff = +(valueA - valueB).toFixed(1);
     const leader = diff >= 0 ? "A" : "B";
-    const diffText = Math.abs(diff) < 0.05 ? "EVEN" : `${leader} +${Math.abs(diff).toFixed(1)}`;
+    const diffText = Math.abs(diff) < 0.05 ? "持平" : `${leader} +${Math.abs(diff).toFixed(1)}`;
     const diffClass = Math.abs(diff) < 0.05 ? "diff-even" : leader === "A" ? "diff-a" : "diff-b";
 
     return `
@@ -428,6 +427,7 @@ function generateCompareInsight(managerA, managerB) {
 }
 
 function updateLogo(manager) {
+  const requestId = ++logoRequestId;
   const logoPath = logoPathFor(manager);
   els.logoFrame.classList.remove("logo-loaded");
   els.brandLogo.hidden = true;
@@ -439,6 +439,7 @@ function updateLogo(manager) {
 
   const probe = new Image();
   probe.onload = () => {
+    if (requestId !== logoRequestId) return;
     els.brandLogo.src = logoPath;
     els.brandLogo.alt = `${manager.name} logo`;
     els.brandLogo.className = logoClassFor(manager);
@@ -447,6 +448,7 @@ function updateLogo(manager) {
     els.logoFrame.classList.add("logo-loaded");
   };
   probe.onerror = () => {
+    if (requestId !== logoRequestId) return;
     els.brandLogo.hidden = true;
     els.logoFallback.hidden = false;
     els.logoFrame.classList.remove("logo-loaded");
@@ -487,12 +489,12 @@ function renderCompareBrandCard(managerA, managerB, market) {
   els.compareBrandView.hidden = false;
   els.compareBrandView.innerHTML = `
     <div class="brand-topline compare-topline">
-      <span>${market.marketCode}</span>
-      <strong>A vs B</strong>
+      <span>${market.label}</span>
+      <strong>A 对比 B</strong>
     </div>
     <div class="vs-arena">
       ${compareLogoMarkup(managerA, "A")}
-      <div class="vs-mark">VS</div>
+      <div class="vs-mark">对比</div>
       ${compareLogoMarkup(managerB, "B")}
     </div>
     <div class="compare-profile-lines">
@@ -518,10 +520,10 @@ function renderProfileMode(manager, market) {
   els.profileBrandView.hidden = false;
   els.compareBrandView.hidden = true;
 
-  els.brandMarket.textContent = market.marketCode;
+  els.brandMarket.textContent = market.label;
   els.brandRank.textContent = rankLabel(managerScaleRank(manager));
   els.brandName.textContent = manager.name;
-  els.brandSub.textContent = `${market.label} ETF Manager Ecosystem Profile`;
+  els.brandSub.textContent = `${market.label} ETF 管理人生态画像`;
   els.ecosystemScore.textContent = manager.ecosystemScore.toFixed(1);
   els.insightText.textContent = insightFor(manager);
 
@@ -541,7 +543,7 @@ function renderCompareLegend(managerA, managerB) {
 
 function renderCompareMode(market) {
   const [managerA, managerB] = currentCompareManagers();
-  els.selectedName.textContent = `${managerA ? managerA.name : "A"} VS ${managerB ? managerB.name : "B"}`;
+  els.selectedName.textContent = `${managerA ? managerA.name : "A"} 对比 ${managerB ? managerB.name : "B"}`;
   renderCompareLegend(managerA, managerB);
   renderCompareMetrics(managerA, managerB);
   renderCompareDimensionRanks(managerA, managerB, market);
