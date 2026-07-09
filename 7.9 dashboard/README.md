@@ -51,40 +51,56 @@ python -m http.server 8000
 
 然后访问 `http://localhost:8000/`。如果本机 `python` 不可用，也可以继续双击打开，但此时可能使用 `app.js` 内置 fallback 数据。
 
-## 如何替换公司 logo
+## Logo 资源说明
 
-把 PNG logo 放入：
+当前 dashboard 使用本地透明背景 SVG logo，用于右侧品牌 hero 区域优先展示。原始 logo 包来源路径：
 
 ```text
-assets/logos/
+C:\Users\lvdon\Desktop\Fullgoal\ICI课题\课题更正\最终更改\logo\US_CN_20_logos_transparent_svg_pack
 ```
 
-推荐命名规则：
+项目内复制路径：
 
-- `blackrock-ishares.png`
-- `vanguard.png`
-- `state-street-spdr.png`
-- `invesco.png`
-- `fullgoal.png`
-- `chinaamc.png`
-- `e-fund.png`
+```text
+assets/logos/svg
+```
 
-文件名应与 `data/etf_scores.json` 中对应管理人的 `slug` 保持一致。例如：
+当前命名沿用原始 SVG 包：
+
+- 中国市场：`CN_01_华夏基金.svg` 至 `CN_10_富国基金.svg`
+- 美国市场：`US_01_Invesco.svg`、`US_02_BlackRock_iShares.svg`、`US_03_StateStreet_SPDR.svg`、`US_04_VanEck.svg`、`US_05_CharlesSchwab.svg`、`US_06_Vanguard.svg`、`US_07_JPMorganAM.svg`、`US_08_Dimensional.svg`、`US_09_Fidelity.svg`、`US_10_FirstTrust.svg`
+
+每个管理人在 `data/etf_scores.json` 中都有 `logo` 字段，例如：
 
 ```json
 {
   "name": "富国基金",
-  "slug": "fullgoal"
+  "slug": "fullgoal",
+  "logo": "assets/logos/svg/CN_10_富国基金.svg"
 }
 ```
 
-对应 logo 文件：
+如果要替换某一家 logo：
+
+1. 把新的透明背景 SVG 或 PNG 放入 `assets/logos/svg`，例如：
 
 ```text
-assets/logos/fullgoal.png
+assets/logos/svg/CN_10_富国基金_new.svg
 ```
 
-如果没有放置 logo 图片，页面会自动使用文字 logo fallback，不会报错。
+2. 修改 `data/etf_scores.json` 中该管理人的 `logo` 路径，例如：
+
+```json
+"logo": "assets/logos/svg/CN_10_富国基金_new.svg"
+```
+
+3. 优先使用透明背景 SVG，保持原始宽高比，不要转成低清 PNG。
+
+前端会按以下顺序处理：
+
+1. 优先加载 `data/etf_scores.json` 中的 `logo`。
+2. 如果 JSON 没有该字段，则使用 `app.js` 中的本地 logo 映射。
+3. 如果图片加载失败或路径为空，则自动 fallback 为原来的大号文字品牌展示，不会报错。
 
 ## 页面说明
 

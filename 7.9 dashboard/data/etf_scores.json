@@ -1,358 +1,378 @@
-{
-  "markets": {
-    "us": {
-      "label": "美国市场",
-      "marketCode": "US MARKET",
-      "defaultManager": "BlackRock/iShares",
-      "managers": [
-        {
-          "rank": 1,
-          "scaleRank": 1,
-          "ecosystemRank": 2,
-          "name": "BlackRock/iShares",
-          "slug": "blackrock-ishares",
-          "etfScale": 4559912130000.0,
-          "marketShare": "28.78%",
-          "scores": {
-            "产品广度": 100.0,
-            "费率优势": 92.6,
-            "交易活跃": 72.3,
-            "多元能力": 85.4,
-            "旗舰产品": 68.7
-          },
-          "ecosystemScore": 83.8
-        },
-        {
-          "rank": 2,
-          "scaleRank": 2,
-          "ecosystemRank": 6,
-          "name": "Vanguard",
-          "slug": "vanguard",
-          "etfScale": 4490894470000.0,
-          "marketShare": "28.34%",
-          "scores": {
-            "产品广度": 67.2,
-            "费率优势": 100.0,
-            "交易活跃": 75.5,
-            "多元能力": 61.7,
-            "旗舰产品": 75.6
-          },
-          "ecosystemScore": 76.0
-        },
-        {
-          "rank": 3,
-          "scaleRank": 3,
-          "ecosystemRank": 3,
-          "name": "State Street/SPDR",
-          "slug": "state-street-spdr",
-          "etfScale": 1997886650000.0,
-          "marketShare": "12.61%",
-          "scores": {
-            "产品广度": 73.9,
-            "费率优势": 96.3,
-            "交易活跃": 77.1,
-            "多元能力": 80.0,
-            "旗舰产品": 88.4
-          },
-          "ecosystemScore": 83.1
-        },
-        {
-          "rank": 4,
-          "scaleRank": 4,
-          "ecosystemRank": 1,
-          "name": "Invesco",
-          "slug": "invesco",
-          "etfScale": 984693614520.0,
-          "marketShare": "6.21%",
-          "scores": {
-            "产品广度": 77.9,
-            "费率优势": 88.2,
-            "交易活跃": 75.1,
-            "多元能力": 99.2,
-            "旗舰产品": 100.0
-          },
-          "ecosystemScore": 88.1
-        },
-        {
-          "rank": 5,
-          "scaleRank": 5,
-          "ecosystemRank": 5,
-          "name": "Charles Schwab",
-          "slug": "charles-schwab",
-          "etfScale": 583807300000.0,
-          "marketShare": "3.68%",
-          "scores": {
-            "产品广度": 60.0,
-            "费率优势": 98.2,
-            "交易活跃": 81.0,
-            "多元能力": 80.6,
-            "旗舰产品": 72.3
-          },
-          "ecosystemScore": 78.4
-        },
-        {
-          "rank": 6,
-          "scaleRank": 6,
-          "ecosystemRank": 7,
-          "name": "JPMorgan AM",
-          "slug": "jpmorgan-am",
-          "etfScale": 324763370000.0,
-          "marketShare": "2.05%",
-          "scores": {
-            "产品广度": 63.4,
-            "费率优势": 84.9,
-            "交易活跃": 67.9,
-            "多元能力": 84.2,
-            "旗舰产品": 70.3
-          },
-          "ecosystemScore": 74.1
-        },
-        {
-          "rank": 7,
-          "scaleRank": 7,
-          "ecosystemRank": 8,
-          "name": "Dimensional",
-          "slug": "dimensional",
-          "etfScale": 299310000000.0,
-          "marketShare": "1.89%",
-          "scores": {
-            "产品广度": 60.7,
-            "费率优势": 88.6,
-            "交易活跃": 72.0,
-            "多元能力": 80.0,
-            "旗舰产品": 68.0
-          },
-          "ecosystemScore": 73.9
-        },
-        {
-          "rank": 8,
-          "scaleRank": 8,
-          "ecosystemRank": 10,
-          "name": "First Trust",
-          "slug": "first-trust",
-          "etfScale": 279797124680.0,
-          "marketShare": "1.77%",
-          "scores": {
-            "产品广度": 81.5,
-            "费率优势": 60.0,
-            "交易活跃": 61.3,
-            "多元能力": 100.0,
-            "旗舰产品": 60.0
-          },
-          "ecosystemScore": 72.6
-        },
-        {
-          "rank": 9,
-          "scaleRank": 9,
-          "ecosystemRank": 9,
-          "name": "Fidelity",
-          "slug": "fidelity",
-          "etfScale": 172005260000.0,
-          "marketShare": "1.09%",
-          "scores": {
-            "产品广度": 65.5,
-            "费率优势": 87.8,
-            "交易活跃": 64.2,
-            "多元能力": 80.0,
-            "旗舰产品": 69.4
-          },
-          "ecosystemScore": 73.4
-        },
-        {
-          "rank": 10,
-          "scaleRank": 10,
-          "ecosystemRank": 4,
-          "name": "VanEck",
-          "slug": "vaneck",
-          "etfScale": 160409092720.0,
-          "marketShare": "1.01%",
-          "scores": {
-            "产品广度": 66.5,
-            "费率优势": 71.5,
-            "交易活跃": 83.9,
-            "多元能力": 89.8,
-            "旗舰产品": 96.5
-          },
-          "ecosystemScore": 81.6
-        }
-      ]
-    },
-    "china": {
-      "label": "中国市场",
-      "marketCode": "CHINA MARKET",
-      "defaultManager": "富国基金",
-      "managers": [
-        {
-          "rank": 1,
-          "scaleRank": 1,
-          "ecosystemRank": 6,
-          "name": "华夏基金",
-          "slug": "chinaamc",
-          "etfScale": 5965.56,
-          "marketShare": "12.52%",
-          "scores": {
-            "产品广度": 99.8,
-            "费率优势": 86.2,
-            "交易活跃": 73.3,
-            "多元能力": 86.6,
-            "旗舰产品": 60.0
-          },
-          "ecosystemScore": 81.2
-        },
-        {
-          "rank": 2,
-          "scaleRank": 2,
-          "ecosystemRank": 5,
-          "name": "易方达基金",
-          "slug": "e-fund",
-          "etfScale": 5821.65,
-          "marketShare": "12.19%",
-          "scores": {
-            "产品广度": 99.2,
-            "费率优势": 100.0,
-            "交易活跃": 62.5,
-            "多元能力": 83.2,
-            "旗舰产品": 62.5
-          },
-          "ecosystemScore": 81.5
-        },
-        {
-          "rank": 3,
-          "scaleRank": 3,
-          "ecosystemRank": 8,
-          "name": "国泰基金",
-          "slug": "guotai-fund",
-          "etfScale": 3715.02,
-          "marketShare": "7.89%",
-          "scores": {
-            "产品广度": 73.7,
-            "费率优势": 66.4,
-            "交易活跃": 83.9,
-            "多元能力": 85.1,
-            "旗舰产品": 67.5
-          },
-          "ecosystemScore": 75.3
-        },
-        {
-          "rank": 4,
-          "scaleRank": 4,
-          "ecosystemRank": 1,
-          "name": "华泰柏瑞基金",
-          "slug": "huatai-pinebridge",
-          "etfScale": 2999.29,
-          "marketShare": "6.17%",
-          "scores": {
-            "产品广度": 66.0,
-            "费率优势": 93.6,
-            "交易活跃": 100.0,
-            "多元能力": 80.0,
-            "旗舰产品": 97.5
-          },
-          "ecosystemScore": 87.4
-        },
-        {
-          "rank": 5,
-          "scaleRank": 5,
-          "ecosystemRank": 10,
-          "name": "广发基金",
-          "slug": "gf-fund",
-          "etfScale": 2593.97,
-          "marketShare": "5.53%",
-          "scores": {
-            "产品广度": 74.7,
-            "费率优势": 60.0,
-            "交易活跃": 76.6,
-            "多元能力": 89.6,
-            "旗舰产品": 61.8
-          },
-          "ecosystemScore": 72.5
-        },
-        {
-          "rank": 6,
-          "scaleRank": 6,
-          "ecosystemRank": 3,
-          "name": "南方基金",
-          "slug": "china-southern",
-          "etfScale": 2455.50,
-          "marketShare": "5.31%",
-          "scores": {
-            "产品广度": 75.9,
-            "费率优势": 97.9,
-            "交易活跃": 90.5,
-            "多元能力": 83.9,
-            "旗舰产品": 68.0
-          },
-          "ecosystemScore": 83.2
-        },
-        {
-          "rank": 7,
-          "scaleRank": 7,
-          "ecosystemRank": 2,
-          "name": "博时基金",
-          "slug": "bosera",
-          "etfScale": 2292.66,
-          "marketShare": "4.88%",
-          "scores": {
-            "产品广度": 66.7,
-            "费率优势": 89.5,
-            "交易活跃": 82.3,
-            "多元能力": 100.0,
-            "旗舰产品": 83.5
-          },
-          "ecosystemScore": 84.4
-        },
-        {
-          "rank": 8,
-          "scaleRank": 8,
-          "ecosystemRank": 7,
-          "name": "嘉实基金",
-          "slug": "harvest-fund",
-          "etfScale": 2247.00,
-          "marketShare": "4.37%",
-          "scores": {
-            "产品广度": 66.7,
-            "费率优势": 85.4,
-            "交易活跃": 77.7,
-            "多元能力": 82.4,
-            "旗舰产品": 81.4
-          },
-          "ecosystemScore": 78.7
-        },
-        {
-          "rank": 9,
-          "scaleRank": 9,
-          "ecosystemRank": 9,
-          "name": "华宝基金",
-          "slug": "huabao",
-          "etfScale": 2092.66,
-          "marketShare": "4.40%",
-          "scores": {
-            "产品广度": 60.0,
-            "费率优势": 65.8,
-            "交易活跃": 76.8,
-            "多元能力": 74.8,
-            "旗舰产品": 98.9
-          },
-          "ecosystemScore": 75.3
-        },
-        {
-          "rank": 10,
-          "scaleRank": 10,
-          "ecosystemRank": 4,
-          "name": "富国基金",
-          "slug": "fullgoal",
-          "etfScale": 1976.67,
-          "marketShare": "4.26%",
-          "scores": {
-            "产品广度": 81.1,
-            "费率优势": 96.4,
-            "交易活跃": 67.2,
-            "多元能力": 94.0,
-            "旗舰产品": 76.1
-          },
-          "ecosystemScore": 83.0
-        }
-      ]
-    }
-  }
+﻿{
+    "markets":  {
+                    "us":  {
+                               "label":  "美国市场",
+                               "marketCode":  "US MARKET",
+                               "defaultManager":  "BlackRock/iShares",
+                               "managers":  [
+                                                {
+                                                    "rank":  1,
+                                                    "scaleRank":  1,
+                                                    "ecosystemRank":  2,
+                                                    "name":  "BlackRock/iShares",
+                                                    "slug":  "blackrock-ishares",
+                                                    "etfScale":  4559912130000.0,
+                                                    "marketShare":  "28.78%",
+                                                    "scores":  {
+                                                                   "产品广度":  100.0,
+                                                                   "费率优势":  92.6,
+                                                                   "交易活跃":  72.3,
+                                                                   "多元能力":  85.4,
+                                                                   "旗舰产品":  68.7
+                                                               },
+                                                    "ecosystemScore":  83.8,
+                                                    "logo":  "assets/logos/svg/US_02_BlackRock_iShares.svg"
+                                                },
+                                                {
+                                                    "rank":  2,
+                                                    "scaleRank":  2,
+                                                    "ecosystemRank":  6,
+                                                    "name":  "Vanguard",
+                                                    "slug":  "vanguard",
+                                                    "etfScale":  4490894470000.0,
+                                                    "marketShare":  "28.34%",
+                                                    "scores":  {
+                                                                   "产品广度":  67.2,
+                                                                   "费率优势":  100.0,
+                                                                   "交易活跃":  75.5,
+                                                                   "多元能力":  61.7,
+                                                                   "旗舰产品":  75.6
+                                                               },
+                                                    "ecosystemScore":  76.0,
+                                                    "logo":  "assets/logos/svg/US_06_Vanguard.svg"
+                                                },
+                                                {
+                                                    "rank":  3,
+                                                    "scaleRank":  3,
+                                                    "ecosystemRank":  3,
+                                                    "name":  "State Street/SPDR",
+                                                    "slug":  "state-street-spdr",
+                                                    "etfScale":  1997886650000.0,
+                                                    "marketShare":  "12.61%",
+                                                    "scores":  {
+                                                                   "产品广度":  73.9,
+                                                                   "费率优势":  96.3,
+                                                                   "交易活跃":  77.1,
+                                                                   "多元能力":  80.0,
+                                                                   "旗舰产品":  88.4
+                                                               },
+                                                    "ecosystemScore":  83.1,
+                                                    "logo":  "assets/logos/svg/US_03_StateStreet_SPDR.svg"
+                                                },
+                                                {
+                                                    "rank":  4,
+                                                    "scaleRank":  4,
+                                                    "ecosystemRank":  1,
+                                                    "name":  "Invesco",
+                                                    "slug":  "invesco",
+                                                    "etfScale":  984693614520.0,
+                                                    "marketShare":  "6.21%",
+                                                    "scores":  {
+                                                                   "产品广度":  77.9,
+                                                                   "费率优势":  88.2,
+                                                                   "交易活跃":  75.1,
+                                                                   "多元能力":  99.2,
+                                                                   "旗舰产品":  100.0
+                                                               },
+                                                    "ecosystemScore":  88.1,
+                                                    "logo":  "assets/logos/svg/US_01_Invesco.svg"
+                                                },
+                                                {
+                                                    "rank":  5,
+                                                    "scaleRank":  5,
+                                                    "ecosystemRank":  5,
+                                                    "name":  "Charles Schwab",
+                                                    "slug":  "charles-schwab",
+                                                    "etfScale":  583807300000.0,
+                                                    "marketShare":  "3.68%",
+                                                    "scores":  {
+                                                                   "产品广度":  60.0,
+                                                                   "费率优势":  98.2,
+                                                                   "交易活跃":  81.0,
+                                                                   "多元能力":  80.6,
+                                                                   "旗舰产品":  72.3
+                                                               },
+                                                    "ecosystemScore":  78.4,
+                                                    "logo":  "assets/logos/svg/US_05_CharlesSchwab.svg"
+                                                },
+                                                {
+                                                    "rank":  6,
+                                                    "scaleRank":  6,
+                                                    "ecosystemRank":  7,
+                                                    "name":  "JPMorgan AM",
+                                                    "slug":  "jpmorgan-am",
+                                                    "etfScale":  324763370000.0,
+                                                    "marketShare":  "2.05%",
+                                                    "scores":  {
+                                                                   "产品广度":  63.4,
+                                                                   "费率优势":  84.9,
+                                                                   "交易活跃":  67.9,
+                                                                   "多元能力":  84.2,
+                                                                   "旗舰产品":  70.3
+                                                               },
+                                                    "ecosystemScore":  74.1,
+                                                    "logo":  "assets/logos/svg/US_07_JPMorganAM.svg"
+                                                },
+                                                {
+                                                    "rank":  7,
+                                                    "scaleRank":  7,
+                                                    "ecosystemRank":  8,
+                                                    "name":  "Dimensional",
+                                                    "slug":  "dimensional",
+                                                    "etfScale":  299310000000.0,
+                                                    "marketShare":  "1.89%",
+                                                    "scores":  {
+                                                                   "产品广度":  60.7,
+                                                                   "费率优势":  88.6,
+                                                                   "交易活跃":  72.0,
+                                                                   "多元能力":  80.0,
+                                                                   "旗舰产品":  68.0
+                                                               },
+                                                    "ecosystemScore":  73.9,
+                                                    "logo":  "assets/logos/svg/US_08_Dimensional.svg"
+                                                },
+                                                {
+                                                    "rank":  8,
+                                                    "scaleRank":  8,
+                                                    "ecosystemRank":  10,
+                                                    "name":  "First Trust",
+                                                    "slug":  "first-trust",
+                                                    "etfScale":  279797124680.0,
+                                                    "marketShare":  "1.77%",
+                                                    "scores":  {
+                                                                   "产品广度":  81.5,
+                                                                   "费率优势":  60.0,
+                                                                   "交易活跃":  61.3,
+                                                                   "多元能力":  100.0,
+                                                                   "旗舰产品":  60.0
+                                                               },
+                                                    "ecosystemScore":  72.6,
+                                                    "logo":  "assets/logos/svg/US_10_FirstTrust.svg"
+                                                },
+                                                {
+                                                    "rank":  9,
+                                                    "scaleRank":  9,
+                                                    "ecosystemRank":  9,
+                                                    "name":  "Fidelity",
+                                                    "slug":  "fidelity",
+                                                    "etfScale":  172005260000.0,
+                                                    "marketShare":  "1.09%",
+                                                    "scores":  {
+                                                                   "产品广度":  65.5,
+                                                                   "费率优势":  87.8,
+                                                                   "交易活跃":  64.2,
+                                                                   "多元能力":  80.0,
+                                                                   "旗舰产品":  69.4
+                                                               },
+                                                    "ecosystemScore":  73.4,
+                                                    "logo":  "assets/logos/svg/US_09_Fidelity.svg"
+                                                },
+                                                {
+                                                    "rank":  10,
+                                                    "scaleRank":  10,
+                                                    "ecosystemRank":  4,
+                                                    "name":  "VanEck",
+                                                    "slug":  "vaneck",
+                                                    "etfScale":  160409092720.0,
+                                                    "marketShare":  "1.01%",
+                                                    "scores":  {
+                                                                   "产品广度":  66.5,
+                                                                   "费率优势":  71.5,
+                                                                   "交易活跃":  83.9,
+                                                                   "多元能力":  89.8,
+                                                                   "旗舰产品":  96.5
+                                                               },
+                                                    "ecosystemScore":  81.6,
+                                                    "logo":  "assets/logos/svg/US_04_VanEck.svg"
+                                                }
+                                            ]
+                           },
+                    "china":  {
+                                  "label":  "中国市场",
+                                  "marketCode":  "CHINA MARKET",
+                                  "defaultManager":  "富国基金",
+                                  "managers":  [
+                                                   {
+                                                       "rank":  1,
+                                                       "scaleRank":  1,
+                                                       "ecosystemRank":  6,
+                                                       "name":  "华夏基金",
+                                                       "slug":  "chinaamc",
+                                                       "etfScale":  5965.56,
+                                                       "marketShare":  "12.52%",
+                                                       "scores":  {
+                                                                      "产品广度":  99.8,
+                                                                      "费率优势":  86.2,
+                                                                      "交易活跃":  73.3,
+                                                                      "多元能力":  86.6,
+                                                                      "旗舰产品":  60.0
+                                                                  },
+                                                       "ecosystemScore":  81.2,
+                                                       "logo":  "assets/logos/svg/CN_01_华夏基金.svg"
+                                                   },
+                                                   {
+                                                       "rank":  2,
+                                                       "scaleRank":  2,
+                                                       "ecosystemRank":  5,
+                                                       "name":  "易方达基金",
+                                                       "slug":  "e-fund",
+                                                       "etfScale":  5821.65,
+                                                       "marketShare":  "12.19%",
+                                                       "scores":  {
+                                                                      "产品广度":  99.2,
+                                                                      "费率优势":  100.0,
+                                                                      "交易活跃":  62.5,
+                                                                      "多元能力":  83.2,
+                                                                      "旗舰产品":  62.5
+                                                                  },
+                                                       "ecosystemScore":  81.5,
+                                                       "logo":  "assets/logos/svg/CN_02_易方达基金.svg"
+                                                   },
+                                                   {
+                                                       "rank":  3,
+                                                       "scaleRank":  3,
+                                                       "ecosystemRank":  8,
+                                                       "name":  "国泰基金",
+                                                       "slug":  "guotai-fund",
+                                                       "etfScale":  3715.02,
+                                                       "marketShare":  "7.89%",
+                                                       "scores":  {
+                                                                      "产品广度":  73.7,
+                                                                      "费率优势":  66.4,
+                                                                      "交易活跃":  83.9,
+                                                                      "多元能力":  85.1,
+                                                                      "旗舰产品":  67.5
+                                                                  },
+                                                       "ecosystemScore":  75.3,
+                                                       "logo":  "assets/logos/svg/CN_03_国泰基金.svg"
+                                                   },
+                                                   {
+                                                       "rank":  4,
+                                                       "scaleRank":  4,
+                                                       "ecosystemRank":  1,
+                                                       "name":  "华泰柏瑞基金",
+                                                       "slug":  "huatai-pinebridge",
+                                                       "etfScale":  2999.29,
+                                                       "marketShare":  "6.17%",
+                                                       "scores":  {
+                                                                      "产品广度":  66.0,
+                                                                      "费率优势":  93.6,
+                                                                      "交易活跃":  100.0,
+                                                                      "多元能力":  80.0,
+                                                                      "旗舰产品":  97.5
+                                                                  },
+                                                       "ecosystemScore":  87.4,
+                                                       "logo":  "assets/logos/svg/CN_04_华泰柏瑞基金.svg"
+                                                   },
+                                                   {
+                                                       "rank":  5,
+                                                       "scaleRank":  5,
+                                                       "ecosystemRank":  10,
+                                                       "name":  "广发基金",
+                                                       "slug":  "gf-fund",
+                                                       "etfScale":  2593.97,
+                                                       "marketShare":  "5.53%",
+                                                       "scores":  {
+                                                                      "产品广度":  74.7,
+                                                                      "费率优势":  60.0,
+                                                                      "交易活跃":  76.6,
+                                                                      "多元能力":  89.6,
+                                                                      "旗舰产品":  61.8
+                                                                  },
+                                                       "ecosystemScore":  72.5,
+                                                       "logo":  "assets/logos/svg/CN_05_广发基金.svg"
+                                                   },
+                                                   {
+                                                       "rank":  6,
+                                                       "scaleRank":  6,
+                                                       "ecosystemRank":  3,
+                                                       "name":  "南方基金",
+                                                       "slug":  "china-southern",
+                                                       "etfScale":  2455.50,
+                                                       "marketShare":  "5.31%",
+                                                       "scores":  {
+                                                                      "产品广度":  75.9,
+                                                                      "费率优势":  97.9,
+                                                                      "交易活跃":  90.5,
+                                                                      "多元能力":  83.9,
+                                                                      "旗舰产品":  68.0
+                                                                  },
+                                                       "ecosystemScore":  83.2,
+                                                       "logo":  "assets/logos/svg/CN_06_南方基金.svg"
+                                                   },
+                                                   {
+                                                       "rank":  7,
+                                                       "scaleRank":  7,
+                                                       "ecosystemRank":  2,
+                                                       "name":  "博时基金",
+                                                       "slug":  "bosera",
+                                                       "etfScale":  2292.66,
+                                                       "marketShare":  "4.88%",
+                                                       "scores":  {
+                                                                      "产品广度":  66.7,
+                                                                      "费率优势":  89.5,
+                                                                      "交易活跃":  82.3,
+                                                                      "多元能力":  100.0,
+                                                                      "旗舰产品":  83.5
+                                                                  },
+                                                       "ecosystemScore":  84.4,
+                                                       "logo":  "assets/logos/svg/CN_07_博时基金.svg"
+                                                   },
+                                                   {
+                                                       "rank":  8,
+                                                       "scaleRank":  8,
+                                                       "ecosystemRank":  7,
+                                                       "name":  "嘉实基金",
+                                                       "slug":  "harvest-fund",
+                                                       "etfScale":  2247.00,
+                                                       "marketShare":  "4.37%",
+                                                       "scores":  {
+                                                                      "产品广度":  66.7,
+                                                                      "费率优势":  85.4,
+                                                                      "交易活跃":  77.7,
+                                                                      "多元能力":  82.4,
+                                                                      "旗舰产品":  81.4
+                                                                  },
+                                                       "ecosystemScore":  78.7,
+                                                       "logo":  "assets/logos/svg/CN_08_嘉实基金.svg"
+                                                   },
+                                                   {
+                                                       "rank":  9,
+                                                       "scaleRank":  9,
+                                                       "ecosystemRank":  9,
+                                                       "name":  "华宝基金",
+                                                       "slug":  "huabao",
+                                                       "etfScale":  2092.66,
+                                                       "marketShare":  "4.40%",
+                                                       "scores":  {
+                                                                      "产品广度":  60.0,
+                                                                      "费率优势":  65.8,
+                                                                      "交易活跃":  76.8,
+                                                                      "多元能力":  74.8,
+                                                                      "旗舰产品":  98.9
+                                                                  },
+                                                       "ecosystemScore":  75.3,
+                                                       "logo":  "assets/logos/svg/CN_09_华宝基金.svg"
+                                                   },
+                                                   {
+                                                       "rank":  10,
+                                                       "scaleRank":  10,
+                                                       "ecosystemRank":  4,
+                                                       "name":  "富国基金",
+                                                       "slug":  "fullgoal",
+                                                       "etfScale":  1976.67,
+                                                       "marketShare":  "4.26%",
+                                                       "scores":  {
+                                                                      "产品广度":  81.1,
+                                                                      "费率优势":  96.4,
+                                                                      "交易活跃":  67.2,
+                                                                      "多元能力":  94.0,
+                                                                      "旗舰产品":  76.1
+                                                                  },
+                                                       "ecosystemScore":  83.0,
+                                                       "logo":  "assets/logos/svg/CN_10_富国基金.svg"
+                                                   }
+                                               ]
+                              }
+                }
 }

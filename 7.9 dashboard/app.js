@@ -39,6 +39,32 @@ const DEFAULT_DATA = {
 
 const dimensions = ["产品广度", "费率优势", "交易活跃", "多元能力", "旗舰产品"];
 const rankPositionClasses = ["product-breadth", "fee-advantage", "trading-activity", "multi-capability", "flagship-product"];
+const logoPaths = {
+  china: {
+    chinaamc: "assets/logos/svg/CN_01_华夏基金.svg",
+    "e-fund": "assets/logos/svg/CN_02_易方达基金.svg",
+    "guotai-fund": "assets/logos/svg/CN_03_国泰基金.svg",
+    "huatai-pinebridge": "assets/logos/svg/CN_04_华泰柏瑞基金.svg",
+    "gf-fund": "assets/logos/svg/CN_05_广发基金.svg",
+    "china-southern": "assets/logos/svg/CN_06_南方基金.svg",
+    bosera: "assets/logos/svg/CN_07_博时基金.svg",
+    "harvest-fund": "assets/logos/svg/CN_08_嘉实基金.svg",
+    huabao: "assets/logos/svg/CN_09_华宝基金.svg",
+    fullgoal: "assets/logos/svg/CN_10_富国基金.svg"
+  },
+  us: {
+    "blackrock-ishares": "assets/logos/svg/US_02_BlackRock_iShares.svg",
+    vanguard: "assets/logos/svg/US_06_Vanguard.svg",
+    "state-street-spdr": "assets/logos/svg/US_03_StateStreet_SPDR.svg",
+    invesco: "assets/logos/svg/US_01_Invesco.svg",
+    "charles-schwab": "assets/logos/svg/US_05_CharlesSchwab.svg",
+    "jpmorgan-am": "assets/logos/svg/US_07_JPMorganAM.svg",
+    dimensional: "assets/logos/svg/US_08_Dimensional.svg",
+    "first-trust": "assets/logos/svg/US_10_FirstTrust.svg",
+    fidelity: "assets/logos/svg/US_09_Fidelity.svg",
+    vaneck: "assets/logos/svg/US_04_VanEck.svg"
+  }
+};
 let state = {
   data: DEFAULT_DATA,
   market: "china",
@@ -53,6 +79,7 @@ const els = {
   brandRank: document.getElementById("brandRank"),
   brandLogo: document.getElementById("brandLogo"),
   logoFallback: document.getElementById("logoFallback"),
+  logoFrame: document.querySelector(".logo-frame"),
   brandName: document.getElementById("brandName"),
   brandSub: document.getElementById("brandSub"),
   ecosystemScore: document.getElementById("ecosystemScore"),
@@ -71,6 +98,17 @@ function rankLabel(rank) {
 
 function managerScaleRank(manager) {
   return manager.scaleRank ?? manager.rank;
+}
+
+function logoPathFor(manager) {
+  return manager.logo || logoPaths[state.market]?.[manager.slug] || "";
+}
+
+function logoClassFor(manager) {
+  const wideNames = ["BlackRock/iShares", "State Street/SPDR", "Charles Schwab", "JPMorgan AM", "Dimensional", "First Trust"];
+  const classes = ["brand-logo", `brand-logo-${state.market}`];
+  if (wideNames.includes(manager.name)) classes.push("brand-logo-wide");
+  return classes.join(" ");
 }
 
 function formatRankLabel(rank) {
@@ -244,22 +282,28 @@ function insightFor(manager) {
 }
 
 function updateLogo(manager) {
-  const logoPath = `assets/logos/${manager.slug}.png`;
+  const logoPath = logoPathFor(manager);
+  els.logoFrame.classList.remove("logo-loaded");
   els.brandLogo.hidden = true;
   els.brandLogo.removeAttribute("src");
   els.logoFallback.hidden = false;
   els.logoFallback.textContent = manager.name;
 
+  if (!logoPath) return;
+
   const probe = new Image();
   probe.onload = () => {
     els.brandLogo.src = logoPath;
     els.brandLogo.alt = `${manager.name} logo`;
+    els.brandLogo.className = logoClassFor(manager);
     els.brandLogo.hidden = false;
     els.logoFallback.hidden = true;
+    els.logoFrame.classList.add("logo-loaded");
   };
   probe.onerror = () => {
     els.brandLogo.hidden = true;
     els.logoFallback.hidden = false;
+    els.logoFrame.classList.remove("logo-loaded");
   };
   probe.src = logoPath;
 }
