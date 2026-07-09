@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ETF Manager Ecosystem Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="dashboard-shell">
+    <div class="ambient-grid" aria-hidden="true"></div>
+    <div class="scanline" aria-hidden="true"></div>
+
+    <header class="topbar panel-fade">
+      <div>
+        <p class="eyebrow">FULLGOAL RESEARCH HUD</p>
+        <h1>ETF Manager Ecosystem Dashboard</h1>
+        <p class="subtitle">五维生态评分｜规模排名视角｜中美 ETF 管理人格局</p>
+      </div>
+      <div class="top-actions">
+        <div class="brand-mark">FULLGOAL <span>富国基金</span></div>
+        <div class="market-switch" role="tablist" aria-label="市场切换">
+          <button class="market-btn active" data-market="china" type="button">中国市场</button>
+          <button class="market-btn" data-market="us" type="button">美国市场</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="content-grid">
+      <aside class="manager-panel glass panel-fade" aria-label="管理人排名列表">
+        <div class="panel-heading">
+          <span>TOP10 MANAGERS</span>
+          <strong id="marketLabel">中国市场占比</strong>
+        </div>
+        <div id="managerList" class="manager-list"></div>
+      </aside>
+
+      <section class="radar-stage glass panel-fade" aria-label="五维雷达图">
+        <div class="section-title">
+          <div>
+            <span>FIVE-DIMENSION PROFILE</span>
+            <p class="dimension-rank-note">维度排名基于当前市场 TOP10 内部计算</p>
+          </div>
+          <strong id="selectedName">富国基金</strong>
+        </div>
+        <div class="radar-wrap">
+          <div class="radar-halo" aria-hidden="true"></div>
+          <div id="dimensionRankLayer" class="dimension-rank-layer" aria-label="五维指标市场内排名">
+            <div class="dimension-rank product-breadth" data-dimension="产品广度"></div>
+            <div class="dimension-rank fee-advantage" data-dimension="费率优势"></div>
+            <div class="dimension-rank trading-activity" data-dimension="交易活跃"></div>
+            <div class="dimension-rank multi-capability" data-dimension="多元能力"></div>
+            <div class="dimension-rank flagship-product" data-dimension="旗舰产品"></div>
+          </div>
+          <svg id="radarChart" class="radar-chart" viewBox="0 0 520 520" role="img" aria-label="五维雷达图">
+            <defs>
+              <radialGradient id="radarGlow" cx="50%" cy="50%" r="55%">
+                <stop offset="0%" stop-color="#f6d889" stop-opacity="0.78"></stop>
+                <stop offset="62%" stop-color="#14bdfa" stop-opacity="0.22"></stop>
+                <stop offset="100%" stop-color="#14bdfa" stop-opacity="0"></stop>
+              </radialGradient>
+              <linearGradient id="radarFill" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f6d889" stop-opacity="0.58"></stop>
+                <stop offset="100%" stop-color="#14bdfa" stop-opacity="0.28"></stop>
+              </linearGradient>
+              <filter id="neonLine">
+                <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#14bdfa" flood-opacity="0.6"></feDropShadow>
+                <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#f6d889" flood-opacity="0.25"></feDropShadow>
+              </filter>
+            </defs>
+            <g id="radarGrid"></g>
+            <g id="radarLabels"></g>
+            <circle cx="260" cy="260" r="80" fill="url(#radarGlow)" opacity="0.32"></circle>
+            <g id="radarShape"></g>
+          </svg>
+        </div>
+        <div id="metricReadout" class="metric-readout"></div>
+      </section>
+
+      <aside class="brand-card glass panel-fade" aria-label="品牌展示区">
+        <div class="orbital-light" aria-hidden="true"></div>
+        <div class="brand-topline">
+          <span id="brandMarket">CHINA MARKET</span>
+          <strong id="brandRank">RANK 10</strong>
+        </div>
+        <div class="logo-frame">
+          <img id="brandLogo" alt="" hidden>
+          <div id="logoFallback" class="logo-fallback">富国基金</div>
+        </div>
+        <div class="brand-info">
+          <p class="brand-name" id="brandName">富国基金</p>
+          <p class="brand-sub" id="brandSub">ETF Manager Ecosystem Profile</p>
+          <div class="score-strip">
+            <span>ECOSYSTEM SCORE</span>
+            <strong id="ecosystemScore">83.0</strong>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="bottom-bar panel-fade">
+      <div class="insight-box">
+        <span>INSIGHT</span>
+        <p id="insightText">富国的优势不在单点爆发，而在产品广度、费率和多元能力；下一步关键是补强入口产品心智与交易沉淀。</p>
+      </div>
+      <p class="method-note">五维评分为市场内 TOP10 标准化结果，生态评分仅供结构参考，不代表中美管理人绝对实力横向可比。</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
