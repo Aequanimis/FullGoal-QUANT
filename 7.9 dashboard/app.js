@@ -68,18 +68,26 @@ const logoPaths = {
 let state = {
   data: DEFAULT_DATA,
   market: "china",
-  selectedName: "富国基金"
+  selectedName: "富国基金",
+  mode: "profile",
+  compareNames: {
+    china: ["富国基金", "华夏基金"],
+    us: ["BlackRock/iShares", "Invesco"]
+  }
 };
 
 const els = {
   managerList: document.getElementById("managerList"),
   marketLabel: document.getElementById("marketLabel"),
+  compareLegend: document.getElementById("compareLegend"),
   selectedName: document.getElementById("selectedName"),
   brandMarket: document.getElementById("brandMarket"),
   brandRank: document.getElementById("brandRank"),
   brandLogo: document.getElementById("brandLogo"),
   logoFallback: document.getElementById("logoFallback"),
   logoFrame: document.querySelector(".logo-frame"),
+  profileBrandView: document.getElementById("profileBrandView"),
+  compareBrandView: document.getElementById("compareBrandView"),
   brandName: document.getElementById("brandName"),
   brandSub: document.getElementById("brandSub"),
   ecosystemScore: document.getElementById("ecosystemScore"),
@@ -132,6 +140,45 @@ function currentMarket() {
 function currentManager() {
   const market = currentMarket();
   return market.managers.find((manager) => manager.name === state.selectedName) || market.managers[0];
+}
+
+function managerByName(name, market = currentMarket()) {
+  return market.managers.find((manager) => manager.name === name);
+}
+
+function getDefaultComparePair(marketKey = state.market) {
+  const market = state.data.markets[marketKey];
+  const preferred = marketKey === "china"
+    ? ["富国基金", "华夏基金"]
+    : ["BlackRock/iShares", "Invesco"];
+  const valid = preferred.filter((name) => market.managers.some((manager) => manager.name === name));
+  if (valid.length === 2) return valid;
+  return market.managers.slice(0, 2).map((manager) => manager.name);
+}
+
+function resetComparePair(marketKey = state.market) {
+  state.compareNames[marketKey] = getDefaultComparePair(marketKey);
+}
+
+function currentCompareManagers() {
+  const market = currentMarket();
+  const names = state.compareNames[state.market] || [];
+  return names.map((name) => managerByName(name, market)).filter(Boolean);
+}
+
+function toggleCompareManager(manager) {
+  const names = [...(state.compareNames[state.market] || [])];
+  const existingIndex = names.indexOf(manager.name);
+
+  if (existingIndex >= 0) {
+    names.splice(existingIndex, 1);
+  } else if (names.length < 2) {
+    names.push(manager.name);
+  } else {
+    names[1] = manager.name;
+  }
+
+  state.compareNames[state.market] = names;
 }
 
 function polarPoint(index, value, radius = 198) {
@@ -226,14 +273,45 @@ function drawRadar(manager) {
   els.radarStage.classList.add("switching");
 }
 
+function drawCompareRadar(managerA, managerB) {
+  els.radarShape.innerHTML = "";
+
+  [
+    { manager: managerA, className: "compare-a", pointClass: "compare-point-a" },
+    { manager: managerB, className: "compare-b", pointClass: "compare-point-b" }
+  ].filter((series) => series.manager).forEach((series) => {
+    const values = dimensions.map((dimension) => series.manager.scores[dimension]);
+    const points = values.map((value, index) => polarPoint(index, value));
+    const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    polygon.setAttribute("points", pointsToString(points));
+    polygon.setAttribute("class", `radar-polygon compare-radar-polygon ${series.className}`);
+    els.radarShape.appendChild(polygon);
+
+    points.forEach((point) => {
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("cx", point.x.toFixed(2));
+      circle.setAttribute("cy", point.y.toFixed(2));
+      circle.setAttribute("r", "4");
+      circle.setAttribute("class", `radar-point compare-radar-point ${series.pointClass}`);
+      els.radarShape.appendChild(circle);
+    });
+  });
+
+  els.radarStage.classList.remove("switching");
+  void els.radarStage.offsetWidth;
+  els.radarStage.classList.add("switching");
+}
+
 function renderManagerList() {
   const market = currentMarket();
   const managers = [...market.managers].sort((a, b) => managerScaleRank(a) - managerScaleRank(b));
+  const compareNames = state.compareNames[state.market] || [];
   els.managerList.innerHTML = managers.map((manager) => `
-    <button class="manager-item${manager.name === state.selectedName ? " active" : ""}" data-name="${manager.name}" type="button">
+    <button class="manager-item${manager.name === state.selectedName && state.mode === "profile" ? " active" : ""}${compareNames[0] === manager.name && state.mode === "compare" ? " compare-a-active" : ""}${compareNames[1] === manager.name && state.mode === "compare" ? " compare-b-active" : ""}" data-name="${manager.name}" type="button">
       <span class="rank">${rankLabel(managerScaleRank(manager))}</span>
       <span class="manager-title" title="${manager.name}">${manager.name}</span>
       <span class="manager-score">${manager.marketShare || "--"}</span>
+      ${state.mode === "compare" && compareNames.includes(manager.name) ? `<span class="compare-slot ${compareNames[0] === manager.name ? "slot-a" : "slot-b"}">${compareNames[0] === manager.name ? "A" : "B"}</span>` : ""}
     </button>
   `).join("");
 }
@@ -247,6 +325,35 @@ function renderMetrics(manager) {
   `).join("");
 }
 
+function renderCompareMetrics(managerA, managerB) {
+  els.metricReadout.innerHTML = dimensions.map((dimension) => {
+    if (!managerA || !managerB) {
+      return `
+        <div class="metric-chip compare-metric-chip">
+          <span>${dimension}</span>
+          <strong>请选择两家</strong>
+          <em>等待对比对象</em>
+        </div>
+      `;
+    }
+
+    const valueA = managerA.scores[dimension];
+    const valueB = managerB.scores[dimension];
+    const diff = +(valueA - valueB).toFixed(1);
+    const leader = diff >= 0 ? "A" : "B";
+    const diffText = Math.abs(diff) < 0.05 ? "EVEN" : `${leader} +${Math.abs(diff).toFixed(1)}`;
+    const diffClass = Math.abs(diff) < 0.05 ? "diff-even" : leader === "A" ? "diff-a" : "diff-b";
+
+    return `
+      <div class="metric-chip compare-metric-chip">
+        <span>${dimension}</span>
+        <strong><b class="metric-a">A</b> ${valueA.toFixed(1)} <i>|</i> <b class="metric-b">B</b> ${valueB.toFixed(1)}</strong>
+        <em class="${diffClass}">${diffText}</em>
+      </div>
+    `;
+  }).join("");
+}
+
 function renderDimensionRanks(manager, market) {
   const ranks = getDimensionRanks(market)[manager.name];
   els.dimensionRankLayer.querySelectorAll(".dimension-rank").forEach((badge) => {
@@ -257,6 +364,22 @@ function renderDimensionRanks(manager, market) {
     badge.innerHTML = `
       <strong>${formatRankLabel(rank)}</strong>
       <span>${dimension}</span>
+    `;
+  });
+}
+
+function renderCompareDimensionRanks(managerA, managerB, market) {
+  const allRanks = getDimensionRanks(market);
+  els.dimensionRankLayer.querySelectorAll(".dimension-rank").forEach((badge) => {
+    const dimension = badge.dataset.dimension;
+    const positionClass = rankPositionClasses.find((className) => badge.classList.contains(className));
+    const rankA = managerA ? allRanks[managerA.name][dimension] : null;
+    const rankB = managerB ? allRanks[managerB.name][dimension] : null;
+    badge.className = `dimension-rank ${positionClass} compare-rank-badge`;
+    badge.innerHTML = `
+      <span class="compare-rank-line rank-line-a ${rankA === 1 ? "is-best" : ""}">A ${rankA ? formatRankLabel(rankA) : "--"}</span>
+      <span class="compare-rank-line rank-line-b ${rankB === 1 ? "is-best" : ""}">B ${rankB ? formatRankLabel(rankB) : "--"}</span>
+      <small>${dimension}</small>
     `;
   });
 }
@@ -279,6 +402,29 @@ function insightFor(manager) {
     return "成本端竞争力突出，但仍需通过入口产品强化用户留存。";
   }
   return "生态画像较为均衡，后续可围绕优势维度继续强化差异化表达。";
+}
+
+function topDimensionNames(items) {
+  return items.slice(0, 2).map((item) => item.dimension).join("和");
+}
+
+function generateCompareInsight(managerA, managerB) {
+  if (!managerA || !managerB) {
+    return "请选择两家同市场管理人，系统将基于五维差异、规模排名、市场份额和生态评分生成对比洞察。";
+  }
+
+  const diffs = dimensions.map((dimension) => ({
+    dimension,
+    diff: +(managerA.scores[dimension] - managerB.scores[dimension]).toFixed(1)
+  }));
+  const aLead = diffs.filter((item) => item.diff > 0).sort((a, b) => b.diff - a.diff);
+  const bLead = diffs.filter((item) => item.diff < 0).sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff));
+  const aText = aLead.length ? topDimensionNames(aLead) : "结构均衡性";
+  const bText = bLead.length ? topDimensionNames(bLead) : "结构均衡性";
+  const scoreDiff = +(managerA.ecosystemScore - managerB.ecosystemScore).toFixed(1);
+  const scoreText = Math.abs(scoreDiff) < 1 ? "生态评分接近" : scoreDiff > 0 ? `${managerA.name}生态评分略高` : `${managerB.name}生态评分略高`;
+
+  return `${managerA.name}在${aText}上更突出，${managerB.name}在${bText}和规模入口上更强（${rankLabel(managerScaleRank(managerB))}，份额${managerB.marketShare}）；${scoreText}，该对比仅用于观察同市场生态结构差异。`;
 }
 
 function updateLogo(manager) {
@@ -308,6 +454,102 @@ function updateLogo(manager) {
   probe.src = logoPath;
 }
 
+function compareLogoMarkup(manager, slot) {
+  if (!manager) {
+    return `
+      <div class="compare-logo-card slot-${slot.toLowerCase()}">
+        <div class="compare-logo-fallback">待选择</div>
+      </div>
+    `;
+  }
+
+  const logoPath = logoPathFor(manager);
+  return `
+    <div class="compare-logo-card slot-${slot.toLowerCase()}">
+      ${logoPath ? `<img class="compare-logo ${logoClassFor(manager)}" src="${logoPath}" alt="${manager.name} logo">` : ""}
+      <div class="compare-logo-fallback" ${logoPath ? "hidden" : ""}>${manager.name}</div>
+    </div>
+  `;
+}
+
+function hydrateCompareLogos() {
+  els.compareBrandView.querySelectorAll(".compare-logo").forEach((image) => {
+    const fallback = image.nextElementSibling;
+    image.addEventListener("error", () => {
+      image.hidden = true;
+      if (fallback) fallback.hidden = false;
+    }, { once: true });
+  });
+}
+
+function renderCompareBrandCard(managerA, managerB, market) {
+  els.profileBrandView.hidden = true;
+  els.compareBrandView.hidden = false;
+  els.compareBrandView.innerHTML = `
+    <div class="brand-topline compare-topline">
+      <span>${market.marketCode}</span>
+      <strong>A vs B</strong>
+    </div>
+    <div class="vs-arena">
+      ${compareLogoMarkup(managerA, "A")}
+      <div class="vs-mark">VS</div>
+      ${compareLogoMarkup(managerB, "B")}
+    </div>
+    <div class="compare-profile-lines">
+      ${[["A", managerA], ["B", managerB]].map(([slot, manager]) => manager ? `
+        <div class="compare-profile-line slot-${slot.toLowerCase()}">
+          <strong><span>${slot}</span>${manager.name}</strong>
+          <p>${rankLabel(managerScaleRank(manager))} | 份额 ${manager.marketShare || "--"} | 生态评分 ${manager.ecosystemScore.toFixed(1)}</p>
+        </div>
+      ` : `
+        <div class="compare-profile-line slot-${slot.toLowerCase()} muted-line">
+          <strong><span>${slot}</span>待选择</strong>
+          <p>请在左侧选择对比对象</p>
+        </div>
+      `).join("")}
+    </div>
+  `;
+  hydrateCompareLogos();
+}
+
+function renderProfileMode(manager, market) {
+  els.selectedName.textContent = manager.name;
+  els.compareLegend.hidden = true;
+  els.profileBrandView.hidden = false;
+  els.compareBrandView.hidden = true;
+
+  els.brandMarket.textContent = market.marketCode;
+  els.brandRank.textContent = rankLabel(managerScaleRank(manager));
+  els.brandName.textContent = manager.name;
+  els.brandSub.textContent = `${market.label} ETF Manager Ecosystem Profile`;
+  els.ecosystemScore.textContent = manager.ecosystemScore.toFixed(1);
+  els.insightText.textContent = insightFor(manager);
+
+  renderMetrics(manager);
+  renderDimensionRanks(manager, market);
+  drawRadar(manager);
+  updateLogo(manager);
+}
+
+function renderCompareLegend(managerA, managerB) {
+  els.compareLegend.hidden = false;
+  els.compareLegend.innerHTML = `
+    <span class="legend-item legend-a"><i></i>A ${managerA ? managerA.name : "待选择"}</span>
+    <span class="legend-item legend-b"><i></i>B ${managerB ? managerB.name : "待选择"}</span>
+  `;
+}
+
+function renderCompareMode(market) {
+  const [managerA, managerB] = currentCompareManagers();
+  els.selectedName.textContent = `${managerA ? managerA.name : "A"} VS ${managerB ? managerB.name : "B"}`;
+  renderCompareLegend(managerA, managerB);
+  renderCompareMetrics(managerA, managerB);
+  renderCompareDimensionRanks(managerA, managerB, market);
+  drawCompareRadar(managerA, managerB);
+  renderCompareBrandCard(managerA, managerB, market);
+  els.insightText.textContent = generateCompareInsight(managerA, managerB);
+}
+
 function render() {
   const market = currentMarket();
   const manager = currentManager();
@@ -316,35 +558,50 @@ function render() {
     button.classList.toggle("active", button.dataset.market === state.market);
   });
 
-  els.marketLabel.textContent = `${market.label}占比`;
-  els.selectedName.textContent = manager.name;
-  els.brandMarket.textContent = market.marketCode;
-  els.brandRank.textContent = rankLabel(managerScaleRank(manager));
-  els.brandName.textContent = manager.name;
-  els.brandSub.textContent = `${market.label} ETF Manager Ecosystem Profile`;
-  els.ecosystemScore.textContent = manager.ecosystemScore.toFixed(1);
-  els.insightText.textContent = insightFor(manager);
+  document.querySelectorAll(".mode-btn").forEach((button) => {
+    button.classList.toggle("active", button.dataset.mode === state.mode);
+  });
 
+  els.marketLabel.textContent = state.mode === "compare" ? `${market.label} A/B 对比` : `${market.label}占比`;
   renderManagerList();
-  renderMetrics(manager);
-  renderDimensionRanks(manager, market);
-  drawRadar(manager);
-  updateLogo(manager);
+
+  if (state.mode === "compare") {
+    renderCompareMode(market);
+  } else {
+    renderProfileMode(manager, market);
+  }
 }
 
 function bindEvents() {
+  document.querySelector(".mode-switch").addEventListener("click", (event) => {
+    const button = event.target.closest(".mode-btn");
+    if (!button) return;
+    state.mode = button.dataset.mode;
+    if (state.mode === "compare") {
+      resetComparePair(state.market);
+    }
+    render();
+  });
+
   document.querySelector(".market-switch").addEventListener("click", (event) => {
     const button = event.target.closest(".market-btn");
     if (!button) return;
     state.market = button.dataset.market;
     state.selectedName = currentMarket().defaultManager;
+    resetComparePair(state.market);
     render();
   });
 
   els.managerList.addEventListener("click", (event) => {
     const button = event.target.closest(".manager-item");
     if (!button) return;
-    state.selectedName = button.dataset.name;
+    const manager = managerByName(button.dataset.name);
+    if (!manager) return;
+    if (state.mode === "compare") {
+      toggleCompareManager(manager);
+    } else {
+      state.selectedName = manager.name;
+    }
     render();
   });
 }
@@ -358,6 +615,8 @@ async function init() {
     if (response.ok) {
       state.data = await response.json();
       state.selectedName = state.data.markets.china.defaultManager;
+      resetComparePair("china");
+      resetComparePair("us");
     }
   } catch (error) {
     // file:// often blocks fetch; DEFAULT_DATA keeps the dashboard usable by double-click.

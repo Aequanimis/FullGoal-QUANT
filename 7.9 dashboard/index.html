@@ -19,6 +19,10 @@
       </div>
       <div class="top-actions">
         <div class="brand-mark">FULLGOAL <span>富国基金</span></div>
+        <div class="mode-switch" role="tablist" aria-label="展示模式切换">
+          <button class="mode-btn active" data-mode="profile" type="button">画像模式</button>
+          <button class="mode-btn" data-mode="compare" type="button">对比模式</button>
+        </div>
         <div class="market-switch" role="tablist" aria-label="市场切换">
           <button class="market-btn active" data-market="china" type="button">中国市场</button>
           <button class="market-btn" data-market="us" type="button">美国市场</button>
@@ -43,6 +47,7 @@
           </div>
           <strong id="selectedName">富国基金</strong>
         </div>
+        <div id="compareLegend" class="compare-legend" hidden></div>
         <div class="radar-wrap">
           <div class="radar-halo" aria-hidden="true"></div>
           <div id="dimensionRankLayer" class="dimension-rank-layer" aria-label="五维指标市场内排名">
@@ -79,24 +84,27 @@
 
       <aside class="brand-card glass panel-fade" aria-label="品牌展示区">
         <div class="orbital-light" aria-hidden="true"></div>
-        <div class="brand-topline">
-          <span id="brandMarket">CHINA MARKET</span>
-          <strong id="brandRank">RANK 10</strong>
-        </div>
-        <div class="logo-frame">
-          <div class="brand-logo-stage">
-            <img id="brandLogo" class="brand-logo" alt="" hidden>
-            <div id="logoFallback" class="logo-fallback">富国基金</div>
+        <div id="profileBrandView" class="profile-brand-view">
+          <div class="brand-topline">
+            <span id="brandMarket">CHINA MARKET</span>
+            <strong id="brandRank">RANK 10</strong>
+          </div>
+          <div class="logo-frame">
+            <div class="brand-logo-stage">
+              <img id="brandLogo" class="brand-logo" alt="" hidden>
+              <div id="logoFallback" class="logo-fallback">富国基金</div>
+            </div>
+          </div>
+          <div class="brand-info">
+            <p class="brand-name" id="brandName">富国基金</p>
+            <p class="brand-sub" id="brandSub">ETF Manager Ecosystem Profile</p>
+            <div class="score-strip">
+              <span>ECOSYSTEM SCORE</span>
+              <strong id="ecosystemScore">83.0</strong>
+            </div>
           </div>
         </div>
-        <div class="brand-info">
-          <p class="brand-name" id="brandName">富国基金</p>
-          <p class="brand-sub" id="brandSub">ETF Manager Ecosystem Profile</p>
-          <div class="score-strip">
-            <span>ECOSYSTEM SCORE</span>
-            <strong id="ecosystemScore">83.0</strong>
-          </div>
-        </div>
+        <div id="compareBrandView" class="compare-brand-view" hidden></div>
       </aside>
     </section>
 
